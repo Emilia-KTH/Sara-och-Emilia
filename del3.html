@@ -1,0 +1,118 @@
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+
+	<title>Veckopeng</title>
+</head>
+
+<body>
+	<h1>Räkna ut din veckopeng med följande formulär:</h1>
+	<script type="text/javascript">
+
+		class Jobb {
+			constructor(namn, uppgift, dag, bonus) {
+				//Klassen jobb representerar ett jobb att göra
+				this.namn = namn;
+				this.uppgift = uppgift;
+				this.dag = dag;
+				this.bonus = bonus;
+			}
+		}
+
+
+		function skapaVecka() {
+			//Skapar en lista med ett Jobb.objekt för var och en av veckans arbetsuppgifter
+			vecka = []
+			vecka[0] = new Jobb("uppgift1", "Labb 1", "Biljettpriser", 1)
+			vecka[1] = new Jobb("uppgift2", "Labb 2", "Funktioner och slingor ", 1)
+			vecka[2] = new Jobb("uppgift3", "Labb 3", "String och Dictionary ", 1)
+			vecka[3] = new Jobb("uppgift4", "Labb 4", "En klass ", 1)
+			vecka[4] = new Jobb("uppgift5", "Labb 5", "Lista av objekt ", 1)
+			vecka[5] = new Jobb("uppgift6", "Labb 6", " Set och arv ", 1)
+			return vecka
+		}
+
+
+		function riktigtTal(str) {
+			//Returnerar true om str inte är tomt, och bara innehåller siffror
+			if (str == "") return false;
+			for (var i = 0; i < str.length; i++) {
+				var tkn = str.substring(i, i + 1)
+				if (tkn < "0" || tkn > "9") return false
+			}
+			return true
+		}
+
+
+		function summeraBonus(vecka) {
+			//Returnerar summan av bonusen i alla objekt i veckan
+			totalt = 0;
+			for (var i = 1; i < vecka.length; i++) {
+				if (vecka[i].gjort) {
+					totalt = totalt + vecka[i].bonus;
+				}
+			}
+			return totalt;
+		}
+
+
+		function summera(formuläret) {
+			//Tittar efter vad som finns i spargrisen, och vilka uppgifter som är ikryssade. Summerar alltihop och skriver resultatet i rutan totalt. 
+			var spargrisen = formuläret.betygspoang.value
+			if (!(riktigtTal(spargrisen)))
+				alert("Du måste skriva hur många tidigare bonuspoäng, med siffror!")
+			else {
+				summa = parseInt(spargrisen)
+
+				if (formuläret.uppgift1.checked)
+					summa += parseInt(formuläret.uppgift1.value)
+				if (formuläret.uppgift2.checked)
+					summa += parseInt(formuläret.uppgift2.value)
+				if (formuläret.uppgift3.checked)
+					summa += parseInt(formuläret.uppgift3.value)
+				if (formuläret.uppgift4.checked)
+					summa += parseInt(formuläret.uppgift4.value)
+				if (formuläret.uppgift5.checked)
+					summa += parseInt(formuläret.uppgift5.value)
+				if (formuläret.uppgift6.checked)
+					summa += parseInt(formuläret.uppgift6.value)
+				
+
+				formuläret.totalt.value = summa
+
+			}
+		}
+
+
+		function skrivHTMLformulär(vecka) {
+			//Skriver ut listan som ett HTML-fomulär (<form>) med <input> för inmatning
+			document.write("<form>")
+			for (var i = 0; i < vecka.length; i++) {
+				document.write("<input type = checkbox name = " + lab[i].namn);
+				document.write(" value = " + lab[i].bonus + ">");
+				document.write(vecka[i].uppgift + " (" + vecka[i].dag + ")");
+				document.write(" = " + vecka[i].bonus + " kronor <br>");
+			}
+
+			document.write("Hur många andra bonuspoäng har du? <input type = 'text' name = 'betygspoang' size = '2'>")
+			document.write("<hr>")
+			document.write("Tryck här för att räkna ut hur mycket du har nu: <input type = 'button' value = 'summera' onClick = 'summera(this.form)'>")
+			document.write("<br>")
+			document.write("Totalt <input type = 'text' name = 'totalt'  size = '10'> Bonuspoäng")
+			document.write("</form>")
+		}
+
+		lab = skapaVecka()
+		skrivHTMLformulär(lab)
+
+	</script>
+
+
+
+</body>
+
+</html>
